@@ -1,0 +1,23 @@
+{
+  "name": "shoppingcart",
+  "version": "1.0.0",
+  "description": "for technical exam",
+  "main": "main.js",
+  "scripts": {
+    "test": "npx mocha --exit --recursive test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdblitz/shopping-cart-nodejs.git"
+  },
+  "author": "Ken Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kdblitz/shopping-cart-nodejs/issues"
+  },
+  "homepage": "https://github.com/kdblitz/shopping-cart-nodejs#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
+}
