@@ -14,8 +14,7 @@ const ShoppingCart = class {
 
   add(itemCode, promoCode = '') {
     if (this.productMap[itemCode]) {
-      this.addedItems[itemCode] = this.addedItems[itemCode] || 0;
-      this.addedItems[itemCode]++;
+      this.addedItems[itemCode] = this.addedItems[itemCode] ? this.addedItems[itemCode]++ : 1;
     } else {
       console.error(`${itemCode} not found`);
     }
@@ -23,6 +22,13 @@ const ShoppingCart = class {
 
   get total() {
     return this.toCurrencyFormat(1);
+  }
+
+  get items() {
+    return Object.entries(this.addedItems).map(([key,value]) => ({
+      item: this.productMap[key].name,
+      quantity: value,
+    }));
   }
 }
 

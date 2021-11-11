@@ -10,3 +10,4 @@ cart.add("invalid");
 cart.add("ult_small");
 
 console.log(cart.total);
+console.log(cart.items);
