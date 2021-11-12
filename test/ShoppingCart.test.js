@@ -38,5 +38,11 @@ describe("Shopping Cart with pricing rule", () => {
     toTestCart.add("ult_small");
 
     expect(toTestCart.total).to.equal(toCurrencyFormat(24.9));
+    expect(toTestCart.items).to.deep.equal([
+      {
+        item: "Unlimited 1GB",
+        quantity: 1,
+      },
+    ]);
   });
 });
