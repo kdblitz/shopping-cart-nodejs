@@ -2,6 +2,7 @@ const chai = require("chai");
 const fs = require("fs");
 const { promisify } = require("util");
 const { expect } = chai;
+require("mocha-sinon");
 
 const readFile = promisify(fs.readFile);
 
@@ -27,14 +28,26 @@ describe("Shopping Cart without pricing rule", () => {
   });
 });
 
-describe("Shopping Cart with pricing rule but without any promos", () => {
-  beforeEach(async () => {
+describe("Shopping Cart with pricing rule without any promos", function () {
+  beforeEach(async function () {
+    this.sinon.stub(console, "error");
+
     const data = await readFile(pricingRulePath);
     const pricingRule = JSON.parse(data);
     toTestCart = new ShoppingCart(pricingRule);
   });
 
-  it("should have updated total and items property after single item to cart", () => {
+  it("should have unchanged total and items property after adding invalid item", () => {
+    const invalidItem = "invalid_item";
+    toTestCart.add(invalidItem);
+
+    expect(console.error.calledWith(`${invalidItem} not found`)).to.be.true;
+
+    expect(toTestCart.total).to.equal(toCurrencyFormat(0));
+    expect(toTestCart.items).to.be.empty;
+  });
+
+  it("should have updated total and items property after adding single item", () => {
     toTestCart.add("ult_small");
 
     expect(toTestCart.total).to.equal(toCurrencyFormat(24.9));
