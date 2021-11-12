@@ -1,17 +1,20 @@
 const formatter = require('./utils/formatter');
+const { activePromos } = require("./promos");
 
 class ShoppingCart {
   productMap = {};
   addedItems = {};
   promoCode = null;
   toCurrencyFormat = (val) => val;
-  applyPromos = [(cartData, productMap) => cartData];
+  activePromos = [(cartData, productMap) => cartData];
 
   constructor({
     products = [],
     toCurrencyFormat = formatter.toCurrencyFormat,
+    promos = activePromos,
   } = {}) {
     this.toCurrencyFormat = toCurrencyFormat;
+    this.activePromos = activePromos;
 
     this.productMap = products.reduce((map, product) => {
       map[product.code] = product;
@@ -54,7 +57,12 @@ class ShoppingCart {
   }
 
   applyPromosToItems() {
-    return this._prepareCartData();
+    let cartData = this._prepareCartData();
+    this.activePromos.forEach((applyPromo) => {
+      cartData = applyPromo(cartData);
+    });
+
+    return cartData;
   }
 
   get total() {
