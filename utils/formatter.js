@@ -1,5 +1,10 @@
 const toCurrencyFormat = function (val) {
-  return `$${Number(val).toFixed(2)}`;
+  const absVal = Math.abs(val);
+  if (Number.isNaN(absVal)) return NaN;
+
+  return val >= 0
+    ? `$${Number(absVal).toFixed(2)}`
+    : `-$${Number(absVal).toFixed(2)}`;
 }
 
 module.exports = {

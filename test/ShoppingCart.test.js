@@ -6,8 +6,8 @@ require("mocha-sinon");
 
 const readFile = promisify(fs.readFile);
 
-const { toCurrencyFormat } = require("../utils/formatter");
-const ShoppingCart = require("../ShoppingCart");
+const { formatter, ShoppingCart } = require("./helper");
+const { toCurrencyFormat } = formatter;
 
 const pricingRulePath = "./data/pricingRules.json";
 
