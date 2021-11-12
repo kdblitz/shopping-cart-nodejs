@@ -26,13 +26,17 @@ const ShoppingCart = class {
   }
 
   get total() {
-    return this.toCurrencyFormat(0);
+    const total = Object.entries(this.addedItems).reduce( (totalAmount, [productCode, quantity]) => {
+      totalAmount += this.productMap[productCode].price * quantity;
+      return totalAmount;
+    }, 0);
+    return this.toCurrencyFormat(total);
   }
 
   get items() {
-    return Object.entries(this.addedItems).map(([key, value]) => ({
-      item: this.productMap[key].name,
-      quantity: value,
+    return Object.entries(this.addedItems).map(([productCode, quantity]) => ({
+      item: this.productMap[productCode].name,
+      quantity,
     }));
   }
 };
