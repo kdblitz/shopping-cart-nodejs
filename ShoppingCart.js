@@ -1,6 +1,11 @@
 const formatter = require('./utils/formatter');
 
 const ShoppingCart = class {
+  productMap = {};
+  addedItems = {};
+  promoCode = null;
+  toCurrencyFormat = (val) => val;
+
   constructor({
     products = [],
     toCurrencyFormat = formatter.toCurrencyFormat,
@@ -26,10 +31,13 @@ const ShoppingCart = class {
   }
 
   get total() {
-    const total = Object.entries(this.addedItems).reduce( (totalAmount, [productCode, quantity]) => {
-      totalAmount += this.productMap[productCode].price * quantity;
-      return totalAmount;
-    }, 0);
+    const total = Object.entries(this.addedItems).reduce(
+      (totalAmount, [productCode, quantity]) => {
+        totalAmount += this.productMap[productCode].price * quantity;
+        return totalAmount;
+      },
+      0
+    );
     return this.toCurrencyFormat(total);
   }
 
