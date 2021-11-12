@@ -18,7 +18,7 @@ const ShoppingCart = class {
   add(itemCode, promoCode = "") {
     if (this.productMap[itemCode]) {
       this.addedItems[itemCode] = this.addedItems[itemCode]
-        ? this.addedItems[itemCode]++
+        ? ++this.addedItems[itemCode]
         : 1;
     } else {
       console.error(`${itemCode} not found`);
