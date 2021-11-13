@@ -85,3 +85,88 @@ describe("Shopping Cart with pricing rule without any promos", function () {
     ]);
   });
 });
+
+describe("Shopping Cart with pricing rule with active promos", () => {
+  beforeEach(function () {
+    toTestCart = new ShoppingCart(pricingRule);
+  });
+
+  it("buying 3 Unlimited 1 GB and 1 Unlimited 5 GB should trigger 3for1 promo (scenario 1)", () => {
+    toTestCart.add("ult_small");
+    toTestCart.add("ult_small");
+    toTestCart.add("ult_small");
+    toTestCart.add("ult_large");
+
+    expect(toTestCart.total).to.equal(toCurrencyFormat(94.7));
+    expect(toTestCart.items).to.deep.equal([
+      {
+        item: "Unlimited 1GB",
+        quantity: 3,
+      },
+      {
+        item: "Unlimited 5GB",
+        quantity: 1,
+      },
+    ]);
+  });
+
+  it("buying 2 Unlimited 1 GB and 4 Unlimited 5 GB should trigger Unlimited 5 GB bulk discount (scenario 2)", () => {
+    toTestCart.add("ult_small");
+    toTestCart.add("ult_small");
+    toTestCart.add("ult_large");
+    toTestCart.add("ult_large");
+    toTestCart.add("ult_large");
+    toTestCart.add("ult_large");
+
+    expect(toTestCart.total).to.equal(toCurrencyFormat(209.4));
+    expect(toTestCart.items).to.deep.equal([
+      {
+        item: "Unlimited 1GB",
+        quantity: 2,
+      },
+      {
+        item: "Unlimited 5GB",
+        quantity: 4,
+      },
+    ]);
+  });
+
+  it("buying 1 Unlimited 1 GB and 2 Unlimited 2 GB should trigger 1 GB data pack bundle (scenario 3)", () => {
+    toTestCart.add("ult_small");
+    toTestCart.add("ult_medium");
+    toTestCart.add("ult_medium");
+
+    expect(toTestCart.total).to.equal(toCurrencyFormat(84.7));
+    expect(toTestCart.items).to.deep.equal([
+      {
+        item: "Unlimited 1GB",
+        quantity: 1,
+      },
+      {
+        item: "Unlimited 2GB",
+        quantity: 2,
+      },
+      {
+        item: "1 GB Data-pack",
+        quantity: 2,
+      },
+    ]);
+  });
+
+  it("buying 1 Unlimited 1 GB, 1 GB data pack with valid promo code should grant cart-wide discount (scenario 4)", () => {
+    toTestCart.add("ult_small");
+    toTestCart.add("1gb", "I<3AMAYSIM");
+
+    expect(toTestCart.total).to.equal(toCurrencyFormat(31.32));
+    expect(toTestCart.items).to.deep.equal([
+      {
+        item: "Unlimited 1GB",
+        quantity: 1,
+      },
+      {
+        item: "1 GB Data-pack",
+        quantity: 1,
+      },
+    ]);
+  });
+});
