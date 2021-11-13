@@ -1,15 +1,9 @@
 const chai = require("chai");
-const fs = require("fs");
-const { promisify } = require("util");
 const { expect } = chai;
 require("mocha-sinon");
 
-const readFile = promisify(fs.readFile);
-
-const { formatter, ShoppingCart } = require("./helper");
+const { ShoppingCart, formatter, pricingRule } = require("./helper");
 const { toCurrencyFormat } = formatter;
-
-const pricingRulePath = "./data/pricingRules.json";
 
 let toTestCart = null;
 
@@ -29,11 +23,9 @@ describe("Shopping Cart without pricing rule", () => {
 });
 
 describe("Shopping Cart with pricing rule without any promos", function () {
-  beforeEach(async function () {
+  beforeEach(function () {
     this.sinon.stub(console, "error");
 
-    const data = await readFile(pricingRulePath);
-    const pricingRule = JSON.parse(data);
     toTestCart = new ShoppingCart(pricingRule);
   });
 

@@ -16,10 +16,7 @@ class ShoppingCart {
     this.toCurrencyFormat = toCurrencyFormat;
     this.activePromos = activePromos;
 
-    this.productMap = products.reduce((map, product) => {
-      map[product.code] = product;
-      return map;
-    }, {});
+    this.productMap = _convertToProductMap(products);
 
     this.addedItems = {};
   }
@@ -35,29 +32,12 @@ class ShoppingCart {
     this.promoCode = promoCode ? promoCode : this.promoCode;
   }
 
-  _prepareCartData() {
-    const cartItems = Object.entries(this.addedItems).reduce(
-      (cartData, [productCode, quantity]) => {
-        const { name, price } = this.productMap[productCode];
-        cartData[productCode] = {
-          item: name,
-          price,
-          quantity,
-          subtotal: price * quantity,
-        };
-        return cartData;
-      },
-      {}
-    );
-
-    return {
-      cartItems,
-      promoCode: this.promoCode,
-    };
-  }
-
   applyPromosToItems() {
-    let cartData = this._prepareCartData();
+    let cartData = _prepareCartData(
+      this.addedItems,
+      this.productMap,
+      this.promoCode
+    );
     this.activePromos.forEach((applyPromo) => {
       cartData = applyPromo(cartData);
     });
@@ -83,6 +63,37 @@ class ShoppingCart {
       quantity,
     }));
   }
+}
+
+const _convertToProductMap = (products) => {
+  return products.reduce((map, product) => {
+    map[product.code] = product;
+    return map;
+  }, {});
+};
+
+const _prepareCartData = (addedItems, productMap, promoCode) => {
+  const cartItems = Object.entries(addedItems).reduce(
+    (cartData, [productCode, quantity]) => {
+      const { name, price } = productMap[productCode];
+      cartData[productCode] = {
+        item: name,
+        price,
+        quantity,
+        subtotal: price * quantity,
+      };
+      return cartData;
+    },
+    {}
+  );
+
+  return {
+    cartItems,
+    promoCode,
+  };
 };
 
 module.exports = ShoppingCart;
+// additional exports mainly to be used on tests
+module.exports._convertToProductMap = _convertToProductMap;
+module.exports._prepareCartData = _prepareCartData;
