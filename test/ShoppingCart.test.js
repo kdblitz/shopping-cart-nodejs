@@ -10,7 +10,7 @@ let toTestCart = null;
 
 describe("Shopping Cart without pricing rule", () => {
   beforeEach(async () => {
-    toTestCart = new ShoppingCart();
+    toTestCart = ShoppingCart.new();
   });
 
   it("should use default formatter", () => {
@@ -27,7 +27,7 @@ describe("Shopping Cart with pricing rule without any promos", function () {
   beforeEach(function () {
     this.sinon.stub(console, "error");
 
-    toTestCart = new ShoppingCart({
+    toTestCart = ShoppingCart.new({
       ...pricingRule,
       promos: noPromos,
     });
@@ -88,7 +88,7 @@ describe("Shopping Cart with pricing rule without any promos", function () {
 
 describe("Shopping Cart with pricing rule with active promos", () => {
   beforeEach(function () {
-    toTestCart = new ShoppingCart(pricingRule);
+    toTestCart = ShoppingCart.new(pricingRule);
   });
 
   it("buying 3 Unlimited 1 GB and 1 Unlimited 5 GB should trigger 3for1 promo (scenario 1)", () => {

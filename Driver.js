@@ -6,7 +6,7 @@ const pricingRules = JSON.parse(rawFile);
 
 const productCodes = pricingRules.products.map((product) => product.code);
 
-const cart = new ShoppingCart(pricingRules);
+const cart = ShoppingCart.new(pricingRules);
 
 const showHelp = () => {
   console.log(`

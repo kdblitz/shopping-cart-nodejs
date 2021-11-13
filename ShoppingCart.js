@@ -95,6 +95,7 @@ const _prepareCartData = (addedItems, productMap, promoCode) => {
 };
 
 module.exports = ShoppingCart;
+module.exports.new = (pricingRules) => new ShoppingCart(pricingRules);
 // additional exports mainly to be used on tests
 module.exports._convertToProductMap = _convertToProductMap;
 module.exports._prepareCartData = _prepareCartData;
