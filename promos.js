@@ -1,3 +1,5 @@
+const cartDataFactory = require("./utils/cartDataFactory");
+
 /* cartData schema:
 {
   cartItems:{
@@ -47,7 +49,27 @@ const ult_small_3for2_promo = (cartData) => {
   return cartData;
 };
 
-const ult_medium_1gb_free_promo = (cart, productMap) => cart;
+const ult_medium_1gb_bundle_promo = (cartData, productMap) => {
+  if (!cartData.cartItems.ult_medium) {
+    return cartData;
+  }
+
+  cartData = clone(cartData);
+
+  const freeQuantity = cartData.cartItems.ult_medium.quantity;
+  const bundledProductCode = "1gb";
+
+  if (!cartData.cartItems[bundledProductCode]) {
+    cartData.cartItems[bundledProductCode] = cartDataFactory(
+      bundledProductCode,
+      0,
+      productMap
+    );
+  }
+  cartData.cartItems[bundledProductCode].quantity += freeQuantity;
+
+  return cartData;
+};
 
 const ult_large_bulk_promo = (cartData) => {
   if (
@@ -103,14 +125,14 @@ const noPromos = [(cartData, productMap) => cartData];
 
 const activePromos = [
   ult_small_3for2_promo,
-  ult_medium_1gb_free_promo,
+  ult_medium_1gb_bundle_promo,
   ult_large_bulk_promo,
   discount_code_promo,
 ];
 
 module.exports = {
   ult_small_3for2_promo,
-  ult_medium_1gb_free_promo,
+  ult_medium_1gb_bundle_promo,
   ult_large_bulk_promo,
   discount_code_promo,
   noPromos,

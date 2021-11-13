@@ -1,4 +1,5 @@
 const formatter = require('./utils/formatter');
+const cartDataFactory = require("./utils/cartDataFactory");
 const { activePromos } = require("./promos");
 
 class ShoppingCart {
@@ -14,7 +15,7 @@ class ShoppingCart {
     promos = activePromos,
   } = {}) {
     this.toCurrencyFormat = toCurrencyFormat;
-    this.activePromos = activePromos;
+    this.activePromos = promos;
 
     this.productMap = _convertToProductMap(products);
 
@@ -39,7 +40,7 @@ class ShoppingCart {
       this.promoCode
     );
     this.activePromos.forEach((applyPromo) => {
-      cartData = applyPromo(cartData);
+      cartData = applyPromo(cartData, this.productMap);
     });
 
     return cartData;
@@ -75,13 +76,11 @@ const _convertToProductMap = (products) => {
 const _prepareCartData = (addedItems, productMap, promoCode) => {
   const cartItems = Object.entries(addedItems).reduce(
     (cartData, [productCode, quantity]) => {
-      const { name, price } = productMap[productCode];
-      cartData[productCode] = {
-        item: name,
-        price,
+      cartData[productCode] = cartDataFactory(
+        productCode,
         quantity,
-        subtotal: price * quantity,
-      };
+        productMap
+      );
       return cartData;
     },
     {}

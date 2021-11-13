@@ -2,8 +2,9 @@ const chai = require("chai");
 const { expect } = chai;
 require("mocha-sinon");
 
-const { ShoppingCart, formatter, pricingRule } = require("./helper");
+const { ShoppingCart, formatter, pricingRule, promos } = require("./helper");
 const { toCurrencyFormat } = formatter;
+const { noPromos } = promos;
 
 let toTestCart = null;
 
@@ -26,7 +27,10 @@ describe("Shopping Cart with pricing rule without any promos", function () {
   beforeEach(function () {
     this.sinon.stub(console, "error");
 
-    toTestCart = new ShoppingCart(pricingRule);
+    toTestCart = new ShoppingCart({
+      ...pricingRule,
+      promos: noPromos,
+    });
   });
 
   it("should have unchanged total and items property after adding invalid item", () => {
