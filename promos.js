@@ -46,25 +46,28 @@ const ult_small_3for2_promo = (cartData) => {
 
   return cartData;
 };
+
 const ult_medium_1gb_free_promo = (cart, productMap) => cart;
 
 const ult_large_bulk_promo = (cartData) => {
   if (
-    cartData.cartItems.ult_large &&
-    cartData.cartItems.ult_large.quantity > 3
+    !cartData.cartItems.ult_large ||
+    cartData.cartItems.ult_large.quantity <= 3
   ) {
-    cartData = clone(cartData);
-
-    const { quantity, ...data } = cartData.cartItems.ult_large;
-    const bulkPrice = 39.9;
-
-    cartData.cartItems.ult_large = {
-      ...data,
-      quantity,
-      price: bulkPrice,
-      subtotal: bulkPrice * quantity,
-    };
+    return cartData;
   }
+
+  cartData = clone(cartData);
+
+  const { quantity, ...data } = cartData.cartItems.ult_large;
+  const bulkPrice = 39.9;
+
+  cartData.cartItems.ult_large = {
+    ...data,
+    quantity,
+    price: bulkPrice,
+    subtotal: bulkPrice * quantity,
+  };
   return cartData;
 };
 
