@@ -4,6 +4,7 @@
   "description": "for technical exam",
   "main": "main.js",
   "scripts": {
+    "start": "node Driver.js",
     "test": "npx mocha --exit --recursive test/"
   },
   "repository": {

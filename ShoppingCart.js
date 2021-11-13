@@ -16,9 +16,11 @@ class ShoppingCart {
   } = {}) {
     this.toCurrencyFormat = toCurrencyFormat;
     this.activePromos = promos;
-
     this.productMap = _convertToProductMap(products);
+    this.addedItems = {};
+  }
 
+  clear() {
     this.addedItems = {};
   }
 
