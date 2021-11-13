@@ -44,4 +44,6 @@ const prepareProductMap = () => {
 const productMap = prepareProductMap();
 module.exports.productMap = productMap;
 
-module.exports.prepareCartData = (addedItems, promoCode) => {};
+module.exports.prepareCartData = (addedItems, promoCode = null) => {
+  return ShoppingCart._prepareCartData(addedItems, productMap, promoCode);
+};
