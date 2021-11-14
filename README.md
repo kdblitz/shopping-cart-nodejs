@@ -45,6 +45,6 @@ After running, an html coverage report will be generated inside `coverage/lcov-r
 
 ## Implementation assumptions:
 These were the assumptions during the implementation, should there be an corrections, let me know so that they can be adjusted:
-- On `cart.add(productCode, promoCode)`, method is call twice with the optional promoCode parameter, the last value supplied will be kept
+- On `cart.add(productCode, promoCode)`, when method is called twice with the optional promoCode parameter, the last value provided will be kept
 - Different promos are allowed to stack. For example, the 3 for 2 deal on Unlimited 1GB Sims may be availed along with the promo codes for additional discount.
 - Multiple add calls are needed to add multiple products to simplify the method signature.
