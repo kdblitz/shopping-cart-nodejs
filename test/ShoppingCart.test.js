@@ -55,6 +55,14 @@ describe("Shopping Cart with pricing rule without any promos", function () {
     ]);
   });
 
+  it("should have clean total and items property after clear", () => {
+    toTestCart.add("ult_small");
+    toTestCart.clear();
+
+    expect(toTestCart.total).to.equal(toCurrencyFormat(0));
+    expect(toTestCart.items).to.be.empty;
+  });
+
   it("should have updated total and items property after adding multiple quantity of single product", () => {
     toTestCart.add("ult_small");
     toTestCart.add("ult_small");

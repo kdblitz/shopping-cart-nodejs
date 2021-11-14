@@ -242,3 +242,20 @@ describe("I<3AMAYSIM Discount code promo", () => {
     });
   });
 });
+
+describe("Invalid Discount code", () => {
+  const promoCode = "Invalid";
+  before(() => {
+    toTestPromo = promos.discount_code_promo;
+  });
+
+  it("should grant no discount on any product purchase", () => {
+    let cartData = prepareCartData({ ult_small: 1 }, promoCode);
+    let tranformedCartData = toTestPromo(cartData);
+
+    expect(tranformedCartData).to.be.deep.equal({
+      ...cartData,
+      promoCode,
+    });
+  });
+});

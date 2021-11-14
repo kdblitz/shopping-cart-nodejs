@@ -4,7 +4,7 @@
 
 This repository holds to Shopping Cart model as described on the forwarded specification.
 
-Application has been developed on node v14.8.x. However, tests have been executed via github Actions on node 12.x and 16.x, so it should also work on those versions.
+Application has been developed on node v14.8.x on Windows. Additionally, tests have been executed using Github Actions on node 12.x and 16.x, so it should also work as well on those versions.
 
 ## Installation
 
@@ -34,6 +34,14 @@ After installing the test dependencies, they may be executed via:
 ```
 npm test
 ```
+
+## Code Coverage
+
+Assuming test dependencies are installed, coverage reports may also be generated using this command:
+```
+npm run coverage
+```
+After running, an html coverage report will be generated inside `coverage/lcov-report` directory.
 
 ## Implementation assumptions:
 These were the assumptions during the implementation, should there be an corrections, let me know so that they can be adjusted:

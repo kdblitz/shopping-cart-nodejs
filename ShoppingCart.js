@@ -6,8 +6,8 @@ class ShoppingCart {
   productMap = {};
   addedItems = {};
   promoCode = null;
-  toCurrencyFormat = (val) => val;
-  activePromos = [(cartData, productMap) => cartData];
+  toCurrencyFormat; // (val) => val;
+  activePromos; // [(cartData, productMap) => cartData];
 
   constructor({
     products = [],
@@ -22,6 +22,7 @@ class ShoppingCart {
 
   clear() {
     this.addedItems = {};
+    this.promoCode = null;
   }
 
   add(itemCode, promoCode = null) {
