@@ -1,6 +1,6 @@
 const formatter = require("../utils/formatter");
 const CartData = require("./CartData");
-const { activePromos } = require("../promos");
+const { activePromos } = require("./promos");
 
 class ShoppingCart {
   productMap = {};

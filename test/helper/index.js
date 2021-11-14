@@ -12,7 +12,7 @@ const moduleLoader = (path) => {
 };
 
 let formatter = moduleLoader("../../utils/formatter");
-let promos = moduleLoader("../../promos");
+let promos = moduleLoader("../../models/promos");
 let CartItem = moduleLoader("../../models/CartItem");
 let CartData = moduleLoader("../../models/CartData");
 let ShoppingCart = moduleLoader("../../models/ShoppingCart");
