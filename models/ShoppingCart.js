@@ -1,11 +1,11 @@
 const formatter = require("../utils/formatter");
-const CartItem = require("./CartItem");
+const CartData = require("./CartData");
 const { activePromos } = require("../promos");
 
 class ShoppingCart {
   productMap = {};
   addedItems = {};
-  promoCode = null;
+  promoCode = null; // string
   toCurrencyFormat; // (val) => val;
   activePromos; // [(cartData, productMap) => cartData];
 
@@ -37,7 +37,7 @@ class ShoppingCart {
   }
 
   applyPromosToItems() {
-    let cartData = _prepareCartData(
+    let cartData = CartData.new(
       this.addedItems,
       this.productMap,
       this.promoCode
@@ -76,23 +76,7 @@ const _convertToProductMap = (products) => {
   }, {});
 };
 
-const _prepareCartData = (addedItems, productMap, promoCode) => {
-  const cartItems = Object.entries(addedItems).reduce(
-    (cartData, [productCode, quantity]) => {
-      cartData[productCode] = CartItem.new(productCode, quantity, productMap);
-      return cartData;
-    },
-    {}
-  );
-
-  return {
-    cartItems,
-    promoCode,
-  };
-};
-
 module.exports = ShoppingCart;
 module.exports.new = (pricingRules) => new ShoppingCart(pricingRules);
 // additional exports mainly to be used on tests
 module.exports._convertToProductMap = _convertToProductMap;
-module.exports._prepareCartData = _prepareCartData;

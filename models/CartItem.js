@@ -1,8 +1,8 @@
 class CartItem {
-  item;
-  price;
-  quantity;
-  subtotal;
+  item; // string
+  price; // number
+  quantity; // number
+  subtotal; // number
 
   constructor(productCode, quantity, productMap) {
     const { name, price } = productMap[productCode];
@@ -13,5 +13,6 @@ class CartItem {
   }
 }
 
+module.exports = CartItem;
 module.exports.new = (productCode, quantity, productMap) =>
   new CartItem(productCode, quantity, productMap);

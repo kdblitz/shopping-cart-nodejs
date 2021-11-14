@@ -1,30 +1,26 @@
 // Loader function to simplify loading of modules for tests
 const fs = require("fs");
 
-let formatter = null;
-let promos = null;
-let ShoppingCart = null;
+const moduleLoader = (path) => {
+  try {
+    return require(path);
+  } catch (err) {
+    const splitPath = path.split("/");
+    console.error(`'${splitPath[splitPath.length - 1]}' not loaded `, err);
+    return null;
+  }
+};
 
-try {
-  formatter = require("../../utils/formatter");
-} catch (err) {
-  console.error("formatter not loaded", err);
-}
-
-try {
-  promos = require("../../promos");
-} catch (err) {
-  console.error("promos not loaded", err);
-}
-
-try {
-  ShoppingCart = require("../../models/ShoppingCart");
-} catch (err) {
-  console.error("ShoppingCart not loaded", err);
-}
+let formatter = moduleLoader("../../utils/formatter");
+let promos = moduleLoader("../../promos");
+let CartItem = moduleLoader("../../models/CartItem");
+let CartData = moduleLoader("../../models/CartData");
+let ShoppingCart = moduleLoader("../../models/ShoppingCart");
 
 module.exports.formatter = formatter;
 module.exports.promos = promos;
+module.exports.CartItem = CartItem;
+module.exports.CartData = CartData;
 module.exports.ShoppingCart = ShoppingCart;
 
 const loadPricingRule = () => {
@@ -43,5 +39,5 @@ const productMap = prepareProductMap();
 module.exports.productMap = productMap;
 
 module.exports.prepareCartData = (addedItems, promoCode = null) => {
-  return ShoppingCart._prepareCartData(addedItems, productMap, promoCode);
+  return CartData.new(addedItems, productMap, promoCode);
 };
