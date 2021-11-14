@@ -1,7 +1,5 @@
 // Loader function to simplify loading of modules for tests
 const fs = require("fs");
-const { promisify } = require("util");
-const readFile = promisify(fs.readFile);
 
 let formatter = null;
 let promos = null;
@@ -20,7 +18,7 @@ try {
 }
 
 try {
-  ShoppingCart = require("../../ShoppingCart");
+  ShoppingCart = require("../../models/ShoppingCart");
 } catch (err) {
   console.error("ShoppingCart not loaded", err);
 }

@@ -1,5 +1,5 @@
 const fs = require("fs");
-const ShoppingCart = require("./ShoppingCart");
+const ShoppingCart = require("./models/ShoppingCart");
 
 const rawFile = fs.readFileSync("./data/pricingRules.json");
 const pricingRules = JSON.parse(rawFile);

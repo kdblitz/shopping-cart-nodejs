@@ -1,6 +1,6 @@
-const formatter = require('./utils/formatter');
-const cartDataFactory = require("./utils/cartDataFactory");
-const { activePromos } = require("./promos");
+const formatter = require("../utils/formatter");
+const CartItem = require("./CartItem");
+const { activePromos } = require("../promos");
 
 class ShoppingCart {
   productMap = {};
@@ -79,11 +79,7 @@ const _convertToProductMap = (products) => {
 const _prepareCartData = (addedItems, productMap, promoCode) => {
   const cartItems = Object.entries(addedItems).reduce(
     (cartData, [productCode, quantity]) => {
-      cartData[productCode] = cartDataFactory(
-        productCode,
-        quantity,
-        productMap
-      );
+      cartData[productCode] = CartItem.new(productCode, quantity, productMap);
       return cartData;
     },
     {}

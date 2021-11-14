@@ -1,4 +1,4 @@
-const cartDataFactory = require("./utils/cartDataFactory");
+const CartItem = require("./models/CartItem");
 
 /* cartData schema:
 {
@@ -60,7 +60,7 @@ const ult_medium_1gb_bundle_promo = (cartData, productMap) => {
   const bundledProductCode = "1gb";
 
   if (!cartData.cartItems[bundledProductCode]) {
-    cartData.cartItems[bundledProductCode] = cartDataFactory(
+    cartData.cartItems[bundledProductCode] = CartItem.new(
       bundledProductCode,
       0,
       productMap

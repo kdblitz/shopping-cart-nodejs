@@ -2,7 +2,7 @@ const chai = require("chai");
 const { expect } = chai;
 require("mocha-sinon");
 
-const { ShoppingCart, formatter, pricingRule, promos } = require("./helper");
+const { ShoppingCart, formatter, pricingRule, promos } = require("../helper");
 const { toCurrencyFormat } = formatter;
 const { noPromos } = promos;
 
